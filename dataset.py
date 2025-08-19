@@ -37,11 +37,6 @@ class TextDataset(Dataset):
         with open(data_file) as file:
             texts = file.readlines()
 
-        """
-        YOUR CODE HERE (⊃｡•́‿•̀｡)⊃━✿✿✿✿✿✿
-        Split texts to train and validation fixing self.TRAIN_VAL_RANDOM_SEED
-        The validation ratio is self.VAL_RATIO
-        """
         np.random.seed(self.TRAIN_VAL_RANDOM_SEED)
         val_texts, train_texts = texts[:int(len(texts) * self.VAL_RATIO)], texts[int(len(texts) * self.VAL_RATIO):]
         np.random.shuffle(train_texts)
@@ -86,14 +81,6 @@ class TextDataset(Dataset):
         Add specials to the index array and pad to maximal length
         :param item: text id
         :return: encoded text indices and its actual length (including BOS and EOS specials)
-        """
-
-        """
-        YOUR CODE HERE (⊃｡•́‿•̀｡)⊃━✿✿✿✿✿✿
-        Take corresponding index array from self.indices,
-        add special tokens (self.bos_id and self.eos_id) and 
-        pad to self.max_length using self.pad_id.
-        Return padded indices of size (max_length, ) and its actual length
         """
 
         indices = self.indices[item]
