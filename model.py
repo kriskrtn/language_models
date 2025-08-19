@@ -25,10 +25,6 @@ class LanguageModel(nn.Module):
         self.rnn_type = rnn_type
         self.rnn_layers = rnn_layers
 
-        """
-        YOUR CODE HERE (⊃｡•́‿•̀｡)⊃━✿✿✿✿✿✿
-        Create necessary layers
-        """
         self.embedding = nn.Embedding(num_embeddings=self.vocab_size, embedding_dim=embed_size,
                                       padding_idx=dataset.pad_id)
         self.rnn = nn.RNN(input_size=embed_size, hidden_size=hidden_size, num_layers=rnn_layers, batch_first=True)
@@ -44,12 +40,7 @@ class LanguageModel(nn.Module):
         :param lengths: LongTensor of lengths of size (batch_size, )
         :return: FloatTensor of logits of shape (batch_size, length, vocab_size)
         """
-    
-        """
-        YOUR CODE HERE (⊃｡•́‿•̀｡)⊃━✿✿✿✿✿✿
-        Convert indices to embeddings, pass them through recurrent layers
-        and apply output linear layer to obtain the logits
-        """
+        
         embeds = self.embedding(indices)
         packed_embeds = pack_padded_sequence(embeds, lengths, batch_first=True, enforce_sorted=False)
         if self.rnn_type == nn.RNN:
@@ -69,14 +60,6 @@ class LanguageModel(nn.Module):
         :return: generated text
         """
         self.eval()
-        """
-        YOUR CODE HERE (⊃｡•́‿•̀｡)⊃━✿✿✿✿✿✿
-        Encode the prefix (do not forget the BOS token!),
-        pass it through the model to accumulate RNN hidden state and
-        generate new tokens sequentially, sampling from categorical distribution,
-        until EOS token or reaching self.max_length.
-        Do not forget to divide predicted logits by temperature before sampling
-        """
         tokens = [self.dataset.bos_id] + self.dataset.text2ids(prefix)
         tokens = torch.tensor(tokens).unsqueeze(0).to(device)
 
